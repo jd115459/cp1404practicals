@@ -26,12 +26,36 @@ def display_guitars(guitars):
     for i, guitar in enumerate(guitars, start=1):
         print(f"{i}: {guitar}")
 
+def get_new_guitars():
+    new_guitars = []
+    name = input("Guitar Name: ").strip()
+    while name != "":
+        year = int(input("Guitar Year: "))
+        cost = float(input("Guitar Cost: "))
+        new_guitars.append(Guitar(name, year, cost))
+        name = input("Guitar Name: ").strip()
+    return new_guitars
+
+
+
 
 def main():
     filename = "guitars.csv"
     guitars = load_guitars(filename)
-    guitars.sort()
     display_guitars(guitars)
+    new_guitars = get_new_guitars()
+
+    for guitar in new_guitars:
+        guitars.append(guitar)
+
+    guitars.sort()
+
+    print("\nSorted Guitars:")
+    display_guitars(guitars)
+
+    save_guitars(guitars, filename)
+    print(f"\nSaved {len(guitars)} guitars to {filename}")
+
 
 if __name__ == "__main__":
     main()
